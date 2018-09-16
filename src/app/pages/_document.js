@@ -2,6 +2,7 @@ import Document, { Head } from 'next/document'
 import SideNav from '../components/SideNav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { GA_TRACKING_ID } from '../lib/gtag'
 
 export default class MyDocument extends Document {
   render () {
@@ -87,6 +88,19 @@ export default class MyDocument extends Document {
           <script async src='https://cdn.ampproject.org/v0.js' />
           <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
           <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}');
+          `}}
+          />
         </Head>
         <body>
           <Header />
